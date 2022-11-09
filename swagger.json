@@ -1,0 +1,222 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a documentation on how to access user APIs",
+    "version": "1.0.0",
+    "title": "User API",
+    "contact": {
+      "email": "abc@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "schemes": ["http"],
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "paths": {
+    "/users/signup": {
+      "post": {
+        "summary": "sign up user",
+        "description": "sign up user",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "request object for signing up an user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/signUp"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/signUpResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/deposit": {
+      "post": {
+        "summary": "deposit Jen token",
+        "description": "deposit Jen token",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "request object for deposit",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/deposit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/depositResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResponse"
+            }
+          },
+          "500": {
+            "description": "Server side error",
+            "schema": {
+              "$ref": "#/definitions/InvalidResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/withdraw": {
+      "post": {
+        "summary": "withdraw Jen token",
+        "description": "withdraw Jen token",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "request object for deposit",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/withdraw"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/withdrawResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResponse"
+            }
+          },
+          "500": {
+            "description": "Server side error",
+            "schema": {
+              "$ref": "#/definitions/InvalidResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "signUpResponse": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "walletAddress": {
+          "type": "string"
+        }
+      }
+    },
+    "depositResponse": {
+      "type": "object",
+      "properties": {
+        "transactionHash": {
+          "type": "string"
+        }
+      }
+    },
+    "withdrawResponse": {
+      "type": "object",
+      "properties": {
+        "transactionHash": {
+          "type": "string"
+        }
+      }
+    },
+
+    "signUp": {
+      "type": "object",
+      "required": ["email", "password"],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "deposit": {
+      "type": "object",
+      "required": ["email", "amount", "fromPrivateKey"],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "fromPrivateKey": {
+          "type": "string"
+        }
+      }
+    },
+    "withdraw": {
+      "type": "object",
+      "required": ["email", "amount", "toAddress"],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "toAddress": {
+          "type": "string"
+        }
+      }
+    },
+    "InvalidResponse": {
+      "type": "object",
+      "properties": {
+        "msg": {
+          "type": "string"
+        }
+      }
+    },
+    "BadRequestResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}
